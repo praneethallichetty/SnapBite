@@ -1,0 +1,140 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Restaurant</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'update_restaurant' restaurant.id %}">
+        {% csrf_token %}
+        <label for="name">Restaurant Name:</label>
+        <input type="text" id="name" name="name" value="{{restaurant.name}}"><br><br>
+
+        <label for="picture">Picture URL:</label>
+        <input type="url" id="picture" name="picture" value="{{restaurant.picture}}"><br><br>
+
+        <label for="cuisine">Cuisine:</label>
+        <input type="text" id="cuisine" name="cuisine" value="{{restaurant.cuisine}}" required><br><br>
+
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" name="rating" step="0.1" min="0" max="5" value="{{restaurant.rating}}"><br><br>
+
+        <button type="submit">Update Restaurant</button>
+    </form>
+    
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Update Restaurant</title>
+  <style>
+    /* Basic reset */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .form-container {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      padding: 30px 40px;
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      color: #222;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px 10px;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    .form-group input:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 4px rgba(0,123,255,0.3);
+    }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-submit:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Update Restaurant</h2>
+    <form method="POST" action="{% url 'update_restaurant' restaurant.id %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Restaurant Name:</label>
+        <input type="text" id="name" name="name" value="{{ restaurant.name }}">
+      </div>
+
+      <div class="form-group">
+        <label for="picture">Picture URL:</label>
+        <input type="url" id="picture" name="picture" value="{{ restaurant.picture }}">
+      </div>
+
+      <div class="form-group">
+        <label for="cuisine">Cuisine:</label>
+        <input type="text" id="cuisine" name="cuisine" value="{{ restaurant.cuisine }}" required>
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" name="rating" step="0.1" min="0" max="5" value="{{ restaurant.rating }}">
+      </div>
+
+      <button class="btn-submit" type="submit">Update Restaurant</button>
+    </form>
+  </div>
+</body>
+</html>

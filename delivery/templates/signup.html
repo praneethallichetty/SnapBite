@@ -1,0 +1,143 @@
+<!-- <!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>SignUp Page</title>
+    </head>
+    <body>
+       <h3>Sign up below:</h3>
+<form method="post" action="{% url 'signup' %}">
+    {% csrf_token %}
+    <label>Username </label>
+    <input type="text" name="username">
+    <br><br>
+
+    <label>Password </label>
+    <input type="password" name="password">
+    <br><br>
+
+    <label>Email </label>
+    <input type="email" name="email">
+    <br><br>
+
+    <label>Mobile </label>
+    <input type="text" name="mobile">
+    <br><br>
+
+    <label>Address </label>
+    <textarea name="address"></textarea>
+    <br><br>
+
+    <button type="submit">SIGN UP</button>
+</form>
+    </body>
+</html>
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SignUp Page</title>
+  <style>
+    /* Reset & base styling */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .signup-container {
+      background: #ffffff;
+      padding: 2.5rem 3rem;
+      border-radius: 10px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      width: 100%;
+      max-width: 400px;
+    }
+    .signup-container h3 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-size: 2rem;
+    }
+    .signup-container form {
+      display: flex;
+      flex-direction: column;
+    }
+    .signup-container label {
+      margin-bottom: 0.5rem;
+      color: #555;
+      font-size: 1rem;
+    }
+    .signup-container input[type="text"],
+    .signup-container input[type="password"],
+    .signup-container input[type="email"],
+    .signup-container textarea {
+      padding: 0.75rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+      resize: vertical;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    .signup-container input[type="text"]:focus,
+    .signup-container input[type="password"]:focus,
+    .signup-container input[type="email"]:focus,
+    .signup-container textarea:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      outline: none;
+    }
+    .signup-container button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 0.75rem 1rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .signup-container button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container">
+    <h3>Sign up below:</h3>
+    <form method="post" action="{% url 'signup' %}">
+      {% csrf_token %}
+      <label>Username</label>
+      <input type="text" name="username" placeholder="Enter username" required>
+
+      <label>Password</label>
+      <input type="password" name="password" placeholder="Enter password" required>
+
+      <label>Email</label>
+      <input type="email" name="email" placeholder="Enter email" required>
+
+      <label>Mobile</label>
+      <input type="text" name="mobile" placeholder="Enter mobile number" required>
+
+      <label>Address</label>
+      <textarea name="address" placeholder="Enter your address" rows="3" required></textarea>
+
+      <button type="submit">SIGN UP</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   Hey {{customer.username}} .....here is your cart item details 
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item Image</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {%  for item in itemList %}
+                <tr>
+                    <td>
+                        <img src="{{ item.picture }}" width="100" alt="{{ item.name }}">
+                    </td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <h2>Total price : {{total_price}}</h2>
+        <form action="{% url 'checkout' username %}">
+            <input type="submit" value="CHECK OUT" />
+        </form>
+    </table>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart Details</title>
+  <style>
+    /* Base reset and box sizing */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: “Segoe UI”, Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f7f9fc;
+      color: #333;
+      line-height: 1.5;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .cart-container {
+      background-color: #ffffff;
+      width: 100%;
+      max-width: 800px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      overflow-x: auto;
+      padding: 2rem;
+    }
+
+    .cart-heading {
+      font-size: 1.5rem;
+      color: #2c3e50;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      background-color: #f0f0f0;
+      color: #555;
+    }
+
+    tr:nth-child(even) {
+      background-color: #fafafb;
+    }
+
+    img {
+      max-width: 100px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+
+    .total-price {
+      text-align: right;
+      font-size: 1.25rem;
+      color: #2c3e50;
+      margin-bottom: 1.5rem;
+    }
+
+    .checkout-form {
+      text-align: right;
+    }
+
+    .checkout-form input[type="submit"] {
+      background-color: #528FF0;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .checkout-form input[type="submit"]:hover {
+      background-color: #427ed1;
+    }
+
+    @media (max-width: 600px) {
+      /* Adjust padding for mobile */
+      .cart-container {
+        padding: 1rem;
+      }
+      th, td {
+        padding: 0.5rem;
+      }
+      .checkout-form input[type="submit"] {
+        width: 100%;
+        box-sizing: border-box;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cart-container">
+    <h1 class="cart-heading">Hey {{ customer.username }} — here is your cart item details</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Item Image</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in itemList %}
+          <tr>
+            <td>
+              <img src="{{ item.picture }}" alt="{{ item.name }}">
+            </td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.description }}</td>
+            <td>₹{{ item.price }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <div class="total-price">Total price: ₹{{ total_price }}</div>
+
+    <div class="checkout-form">
+      <form action="{% url 'checkout' username %}">
+        <input type="submit" value="CHECK OUT" />
+      </form>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>Order Summary</title>
+</head>
+<body>
+    <h1>&#128522; Thank you for your order, {{ username }}! &#128522;</h1>
+
+
+    <h2>Delivery Address</h2>
+    <p>{{ customer.address }}</p>
+
+    <p>Your order will be delivered to this location shortly. Thank you for choosing Meal Mate!</p>
+
+    <p><a href="{% url 'view_cart' %}">Back to Cart</a></p>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order Summary</title>
+  <style>
+    /* Global resets / base styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      line-height: 1.6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 1rem;
+    }
+    .container {
+      background-color: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      max-width: 400px;
+      width: 100%;
+      padding: 2rem;
+      text-align: center;
+    }
+    h1 {
+      font-size: 1.75rem;
+      margin-bottom: 1.5rem;
+      color: #2c3e50;
+    }
+    h2 {
+      font-size: 1.25rem;
+      margin: 1.25rem 0 0.5rem;
+      color: #34495e;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+    a {
+      display: inline-block;
+      margin-top: 1.25rem;
+      text-decoration: none;
+      color: #ffffff;
+      background-color: #3498db;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.2s ease-in-out;
+    }
+    a:hover {
+      background-color: #2980b9;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>&#128522; Thank you for your order, {{ username }}! &#128522;</h1>
+
+    <h2>Delivery Address</h2>
+    <p>{{ customer.address }}</p>
+
+    <p>Your order will be delivered to this location shortly. Thank you for choosing Meal Mate!</p>
+
+    <p><a href="{% url 'view_cart' %}">Back to Cart</a></p>
+  </div>
+</body>
+</html>

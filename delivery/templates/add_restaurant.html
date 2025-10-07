@@ -1,0 +1,142 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Restaurant Page</title>
+</head>
+<body>
+    <h3>Add Restaurant</h3>
+    <form method="post" action="{% url 'add_restaurant' %}">
+         {% csrf_token %}
+        <label for="name">Restaurant Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="picture">Picture URL:</label>
+        <input type="url" id="picture" name="picture" required><br><br>
+
+        <label for="Cuisine">Cuisine:</label>
+        <input type="text" id="Cuisine" name="cuisine" required><br><br>
+
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" name="rating" step="0.1" min="0" max="5" required><br><br>
+
+        <button type="submit">Add Restaurant</button>
+     </form>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Restaurant Page</title>
+  <style>
+    /* Reset basics */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html, body {
+      height: 100%;
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #333;
+    }
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .form-box {
+      background: #fff;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      padding: 30px 20px;
+    }
+
+    .form-box h3 {
+      text-align: center;
+      margin-bottom: 24px;
+      font-size: 1.5rem;
+      color: #222;
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+    }
+    .form-group input {
+      width: 100%;
+      padding: 8px 10px;
+      font-size: 1rem;
+      border: 1px solid #aaa;
+      border-radius: 4px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-group input:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 6px rgba(0,123,255,0.3);
+      outline: none;
+    }
+
+    .btn-submit {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      font-size: 1rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .btn-submit:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-box">
+    <h3>Add Restaurant</h3>
+    <form method="post" action="{% url 'add_restaurant' %}">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">Restaurant Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="picture">Picture URL:</label>
+        <input type="url" id="picture" name="picture" required>
+      </div>
+
+      <div class="form-group">
+        <label for="Cuisine">Cuisine:</label>
+        <input type="text" id="Cuisine" name="cuisine" required>
+      </div>
+
+      <div class="form-group">
+        <label for="rating">Rating:</label>
+        <input type="number" id="rating" name="rating" step="0.1" min="0" max="5" required>
+      </div>
+
+      <button class="btn-submit" type="submit">Add Restaurant</button>
+    </form>
+  </div>
+</body>
+</html>

@@ -1,0 +1,488 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Restaurants</title>
+</head>
+<body>
+    <h3>Available Restaurants near you</h3>
+     <table border="1">
+        <thead>
+            <tr>
+                <th>Picture</th>
+                <th>Restaurant Name</th>
+                <th>Cuisine</th>
+                <th>Rating</th>
+                <th>Operations</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for restaurant in restaurants %}
+            <tr>     
+                <td>
+                    <img src="{{ restaurant.picture }}" alt="picture of {{ restaurant.name }}" width="100">
+                </td>
+                <td>{{ restaurant.name }}</td>
+                <td>{{ restaurant.cuisine }}</td>
+                <td>{{ restaurant.rating }}/5</td>
+                <td>
+                     <a href="{% url 'open_update_restaurant' restaurant.id %}">Update Restaurant</a>
+                    <br>
+                    <form method="POST" action="{% url 'delete_restaurant' restaurant.id %}">
+                        {% csrf_token %}
+                            <button type="submit">Delete Restaurant</button>
+                    </form>
+                    <br>
+                    <a href="{% url 'open_update_menu' restaurant.id %}">Update Menu</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+     </table>
+    </body>
+</html> -->
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Available Restaurants</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .card {
+      flex: 0 0 calc(20% - 20px); /* 5 cards per view minus spacing */
+      margin: 10px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 12px;
+      flex-grow: 1;
+    }
+
+    .card-content h4 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+    }
+    .card-content p {
+      margin: 4px 0;
+      font-size: 0.95rem;
+    }
+
+    .card-content .operations {
+      margin-top: auto;
+    }
+    .card-content .operations a,
+    .card-content .operations button {
+      display: block;
+      margin: 6px 0;
+      text-decoration: none;
+      color: #007bff;
+      border: none;
+      background: none;
+      padding: 4px 0;
+      cursor: pointer;
+    }
+    .card-content .operations button:hover,
+    .card-content .operations a:hover {
+      text-decoration: underline;
+    }
+
+    .nav-buttons {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      transform: translateY(-50%);
+      display: flex;
+      justify-content: space-between;
+      pointer-events: none;
+    }
+    .nav-buttons button {
+      pointer-events: all;
+      background: rgba(255,255,255,0.8);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    .nav-buttons button:hover {
+      background: rgba(255,255,255,1);
+    }
+
+    @media (max-width: 800px) {
+      .card {
+        flex: 0 0 calc(50% - 20px);
+      }
+    }
+    @media (max-width: 500px) {
+      .card {
+        flex: 0 0 calc(100% - 20px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h3>Available Restaurants near you</h3>
+
+  <div class="carousel-container">
+    <div class="carousel-track" id="track">
+      {% for restaurant in restaurants %}
+      <div class="card">
+        <img src="{{ restaurant.picture }}" alt="Picture of {{ restaurant.name }}">
+        <div class="card-content">
+          <h4>{{ restaurant.name }}</h4>
+          <p>Cuisine: {{ restaurant.cuisine }}</p>
+          <p>Rating: {{ restaurant.rating }}/5</p>
+          <div class="operations">
+            <a href="{% url 'open_update_restaurant' restaurant.id %}">Update Restaurant</a>
+            <form method="POST" action="{% url 'delete_restaurant' restaurant.id %}">
+              {% csrf_token %}
+              <button type="submit">Delete</button>
+            </form>
+            <a href="{% url 'open_update_menu' restaurant.id %}">Update Menu</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="nav-buttons">
+      <button id="prevBtn">&lt; Prev</button>
+      <button id="nextBtn">Next &gt;</button>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      const track = document.getElementById('track');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      // Number of cards visible at one time (5 as requested)
+      let cardsPerSlide = 5;
+
+      function updateButtons() {
+        const trackRect = track.getBoundingClientRect();
+        // disable previous if at start
+        if (track.style.transform === '' || track.style.transform === 'translateX(0px)') {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+        // disable next if end reached
+        const maxShift = track.scrollWidth - track.parentElement.clientWidth;
+        const currentShift = Math.abs(getCurrentTranslateX());
+        if (currentShift >= maxShift) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function getCurrentTranslateX() {
+        const style = window.getComputedStyle(track);
+        const matrix = style.transform || style.webkitTransform;
+        if (matrix && matrix !== 'none') {
+          const values = matrix.match(/matrix.*\((.+)\)/)[1].split(', ');
+          const tx = parseFloat(values[4]);
+          return tx;
+        }
+        return 0;
+      }
+
+      function slideNext() {
+        const parentWidth = track.parentElement.clientWidth;
+        const shift = parentWidth; 
+        const current = getCurrentTranslateX();
+        // move left (negative) but not beyond limits
+        let next = current - shift;
+        const maxShift = track.scrollWidth - parentWidth;
+        if (Math.abs(next) > maxShift) {
+          next = -maxShift;
+        }
+        track.style.transform = `translateX(${next}px)`;
+        updateButtons();
+      }
+
+      function slidePrev() {
+        const parentWidth = track.parentElement.clientWidth;
+        const shift = parentWidth;
+        const current = getCurrentTranslateX();
+        let next = current + shift;
+        if (next > 0) next = 0;
+        track.style.transform = `translateX(${next}px)`;
+        updateButtons();
+      }
+
+      prevBtn.addEventListener('click', slidePrev);
+      nextBtn.addEventListener('click', slideNext);
+
+      // On load, disable prev if at start
+      updateButtons();
+
+      // Also respond to window resize (recompute buttons)
+      window.addEventListener('resize', () => {
+        track.style.transform = 'translateX(0px)';
+        updateButtons();
+      });
+    })();
+  </script>
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Available Restaurants</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h3 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .carousel-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 1200px;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .card {
+      flex: 0 0 calc(20% - 20px); /* 5 cards per view minus spacing */
+      margin: 10px;
+      background: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 12px;
+      flex-grow: 1;
+    }
+
+    .card-content h4 {
+      margin: 0 0 8px;
+      font-size: 1.1rem;
+    }
+    .card-content p {
+      margin: 4px 0;
+      font-size: 0.95rem;
+    }
+
+    .card-content .operations {
+      margin-top: auto;
+    }
+    .card-content .operations a,
+    .card-content .operations button {
+      display: block;
+      margin: 6px 0;
+      text-decoration: none;
+      color: #007bff;
+      border: none;
+      background: none;
+      padding: 4px 0;
+      cursor: pointer;
+    }
+    .card-content .operations button:hover,
+    .card-content .operations a:hover {
+      text-decoration: underline;
+    }
+
+    /* Hide the original nav-buttons container (so they don’t float) */
+    .nav-buttons {
+      display: none;
+    }
+
+    .bottom-nav {
+      margin-top: 20px;
+      text-align: center;
+    }
+    .bottom-nav button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 10px 20px;
+      margin: 0 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+    .bottom-nav button:disabled {
+      background-color: #cccccc;
+      cursor: default;
+    }
+    .bottom-nav button:hover:not(:disabled) {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 800px) {
+      .card {
+        flex: 0 0 calc(50% - 20px);
+      }
+    }
+    @media (max-width: 500px) {
+      .card {
+        flex: 0 0 calc(100% - 20px);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h3>Available Restaurants in our Meal mate app for users</h3>
+
+  <div class="carousel-container">
+    <div class="carousel-track" id="track">
+      {% for restaurant in restaurants %}
+      <div class="card">
+        <img src="{{ restaurant.picture }}" alt="Picture of {{ restaurant.name }}">
+        <div class="card-content">
+          <h4>{{ restaurant.name }}</h4>
+          <p>Cuisine: {{ restaurant.cuisine }}</p>
+          <p>Rating: {{ restaurant.rating }}/5</p>
+          <div class="operations">
+            <a href="{% url 'open_update_restaurant' restaurant.id %}">Update Restaurant</a>
+            <form method="POST" action="{% url 'delete_restaurant' restaurant.id %}">
+              {% csrf_token %}
+              <button type="submit">Delete</button>
+            </form>
+            <a href="{% url 'open_update_menu' restaurant.id %}">Update Menu</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="bottom-nav">
+    <button id="prevBtn">&lt; Prev</button>
+    <button id="nextBtn">Next &gt;</button>
+  </div>
+
+  <script>
+    (function(){
+      const track = document.getElementById('track');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+
+      function updateButtons() {
+        if (track.style.transform === '' || track.style.transform === 'translateX(0px)') {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+        const maxShift = track.scrollWidth - track.parentElement.clientWidth;
+        const currentShift = Math.abs(getCurrentTranslateX());
+        if (currentShift >= maxShift) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function getCurrentTranslateX() {
+        const style = window.getComputedStyle(track);
+        const matrix = style.transform || style.webkitTransform;
+        if (matrix && matrix !== 'none') {
+          const values = matrix.match(/matrix.*\((.+)\)/)[1].split(', ');
+          const tx = parseFloat(values[4]);
+          return tx;
+        }
+        return 0;
+      }
+
+      function slideNext() {
+        const parentWidth = track.parentElement.clientWidth;
+        const current = getCurrentTranslateX();
+        let next = current - parentWidth;
+        const maxShift = track.scrollWidth - parentWidth;
+        if (Math.abs(next) > maxShift) {
+          next = -maxShift;
+        }
+        track.style.transform = `translateX(${next}px)`;
+        updateButtons();
+      }
+
+      function slidePrev() {
+        const parentWidth = track.parentElement.clientWidth;
+        const current = getCurrentTranslateX();
+        let next = current + parentWidth;
+        if (next > 0) next = 0;
+        track.style.transform = `translateX(${next}px)`;
+        updateButtons();
+      }
+
+      prevBtn.addEventListener('click', slidePrev);
+      nextBtn.addEventListener('click', slideNext);
+
+      updateButtons();
+      window.addEventListener('resize', () => {
+        track.style.transform = 'translateX(0px)';
+        updateButtons();
+      });
+    })();
+  </script>
+</body>
+</html>
