@@ -1,13 +1,13 @@
-<h1>**SnapBite**</h1>
+<h1>SnapBite</h1>
 
 SnapBite: A full-stack food ordering platform that allows customers to browse restaurants, place orders, and make payments while allowing vendors to manage their restaurant details, orders, and menus.
 The platform includes secure user authentication and role-based access control to ensure only authorized users can access specific resources.
 
 ---
 
-**Features**
+<h2>Features</h2>
 
-Customer Features
+<h3>Customer Features</h3>
 
 **Customer Registration and Login:**
 Customers can register and log in to place an order. Only active users can log in.
@@ -32,7 +32,7 @@ Unauthorized access to vendor-specific links or pages results in an error messag
 
 ---
 
-**Vendor Features**
+<h3>Vendor Features</h3>
 
 **Vendor Registration and Login:**
 Vendors can register and log in to manage their restaurant and orders.
